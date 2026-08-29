@@ -1,6 +1,10 @@
 #!/usr/bin/env node
 import { calculateMeetingCost } from '../src/meetingCost.js';
 
+/**
+ * @param {string[]} argv - Argumentos posicionais brutos (participantes, duracao, custo/hora).
+ * @returns {{ participants: number, durationMinutes: number, hourlyRate: number }}
+ */
 function parseArgs(argv) {
   const [participantsRaw, durationRaw, hourlyRateRaw] = argv;
   return {
@@ -10,6 +14,9 @@ function parseArgs(argv) {
   };
 }
 
+/**
+ * @returns {void}
+ */
 function main() {
   const argv = process.argv.slice(2);
 
@@ -29,7 +36,8 @@ function main() {
     console.log(`Custo por hora: ${hourlyRate}`);
     console.log(`Custo total da reuniao: ${cost.toFixed(2)}`);
   } catch (error) {
-    console.error(`Erro: ${error.message}`);
+    const message = error instanceof Error ? error.message : String(error);
+    console.error(`Erro: ${message}`);
     process.exitCode = 1;
   }
 }
